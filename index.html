@@ -521,7 +521,6 @@
       const name = document.getElementById('pledgeName').value.trim();
       const whatsapp = document.getElementById('pledgeWhatsApp').value.trim();
       const email = document.getElementById('pledgeEmail').value.trim();
-      const contact = whatsapp || email;
       const message = document.getElementById('pledgeMessage').value.trim();
       const skill = document.getElementById('pledgeSkill') ? document.getElementById('pledgeSkill').value.trim() : '';
       const timeRadio = document.querySelector('input[name="pledgeTime"]:checked');
@@ -542,6 +541,7 @@
         whatsapp: whatsapp,
         email: email,
         offer: selected.join(', '),
+        skill: skill,
         availability: timeVal,
         message: message
       };
@@ -560,9 +560,13 @@ I'd like to get involved with the BBB Community Model 2026.
 `;
       waText += `*Name:* ${name}
 `;
-      waText += `*Contact:* ${contact}
+      if (whatsapp) waText += `*WhatsApp:* ${whatsapp}
+`;
+      if (email) waText += `*Email:* ${email}
 `;
       waText += `*I can offer:* ${selected.join(', ')}
+`;
+      if (skill) waText += `*Skill/Activity:* ${skill}
 `;
       if (timeVal) waText += `*Availability:* ${timeVal}
 `;
