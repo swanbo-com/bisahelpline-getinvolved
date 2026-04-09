@@ -18,8 +18,8 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            mkdir -p /var/www/getinvolved.bisahelpline.com
-            cd /var/www/getinvolved.bisahelpline.com
+            mkdir -p /var/www/getinvolved.bersamabisafoundation.org
+            cd /var/www/getinvolved.bersamabisafoundation.org
             if [ -d .git ]; then
               git pull origin main
             else
