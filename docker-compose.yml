@@ -1,0 +1,44 @@
+services:
+  app-blue:
+    image: ${IMAGE_TAG}
+    container_name: ${APP_NAME}-blue
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.${APP_NAME}-prod.rule=Host(`${DOMAIN}`)"
+      - "traefik.http.routers.${APP_NAME}-prod.entrypoints=websecure"
+      - "traefik.http.routers.${APP_NAME}-prod.tls=true"
+      - "traefik.http.routers.${APP_NAME}-prod.tls.certresolver=letsencrypt"
+      - "traefik.http.services.${APP_NAME}-prod.loadbalancer.server.port=3000"
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:3000"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    networks:
+      - traefik-public
+
+  app-green:
+    image: ${IMAGE_TAG}
+    container_name: ${APP_NAME}-green
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.${APP_NAME}-prod.rule=Host(`${DOMAIN}`)"
+      - "traefik.http.routers.${APP_NAME}-prod.entrypoints=websecure"
+      - "traefik.http.routers.${APP_NAME}-prod.tls=true"
+      - "traefik.http.routers.${APP_NAME}-prod.tls.certresolver=letsencrypt"
+      - "traefik.http.services.${APP_NAME}-prod.loadbalancer.server.port=3000"
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:3000"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    networks:
+      - traefik-public
+
+networks:
+  traefik-public:
+    external: true
